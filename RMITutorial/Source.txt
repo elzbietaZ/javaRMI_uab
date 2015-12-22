@@ -1,3 +1,2 @@
-
-it is the tutorial from this side:
+It is the tutorial from this side:
 http://o7planning.org/web/fe/default/en/document/13322/java-remote-method-invocation-java-rmi-tutorial#a13347
