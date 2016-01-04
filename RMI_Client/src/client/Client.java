@@ -14,9 +14,9 @@ import rmi.Message;
  
 public class Client  implements Runnable {
  
-    private static final String HOST_IDSERVER = "localhost";
+    private static final String HOST_IDSERVER = "52.11.90.68";
     private static final int PORT_IDSERVER = 1201;
-    private static final String HOST_MAILSERVER = "localhost";
+    private static final String HOST_MAILSERVER = "52.11.90.68";
     private static final int PORT_MAILSERVER = 1202;
     private static Registry registry_idserver;
     private static Registry registry_mailserver;
@@ -32,7 +32,8 @@ public class Client  implements Runnable {
 	public void run() {
 		 
         try {
-			registry_idserver = LocateRegistry.getRegistry(HOST_IDSERVER, PORT_IDSERVER);	
+			registry_idserver = LocateRegistry.getRegistry(HOST_IDSERVER, PORT_IDSERVER);
+			System.out.println(registry_idserver.toString());
         } catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -40,6 +41,7 @@ public class Client  implements Runnable {
 		try {
 			registry_mailserver = LocateRegistry.
 					getRegistry(HOST_MAILSERVER, PORT_MAILSERVER);
+			System.out.println(registry_mailserver.toString());
 		} catch (RemoteException e2) {
 			e2.printStackTrace();
 		}	

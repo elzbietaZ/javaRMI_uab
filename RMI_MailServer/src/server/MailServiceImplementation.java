@@ -39,7 +39,7 @@ public class MailServiceImplementation extends UnicastRemoteObject implements Ma
 			}
 		}
 		
-		if (messages_of_id_sent != "") {
+		if (!messages_of_id_sent.equals("")) {
 			messages_of_id_sent = "-------------------------------------------------\n"
 					+ "SENT\n-------------------------------------------------\n"
 					+ messages_of_id_sent;
@@ -52,10 +52,14 @@ public class MailServiceImplementation extends UnicastRemoteObject implements Ma
 			}
 		}
 		
-		if (messages_of_id_received != "") {
+		if (!messages_of_id_received.equals("")) {
 			messages_of_id_received = "-------------------------------------------------\n"
 					+ "RECEIVED\n-------------------------------------------------\n"
 					+ messages_of_id_received;
+		}
+		
+		if (!messages_of_id_sent.equals("") && !messages_of_id_received.equals("")) {
+			messages_of_id_received = messages_of_id_received + "\n";
 		}
 		
 		return messages_of_id_received + messages_of_id_sent;
