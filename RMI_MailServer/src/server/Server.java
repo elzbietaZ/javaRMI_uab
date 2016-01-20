@@ -9,15 +9,35 @@ import java.rmi.registry.Registry;
 
 import rmi.MailService;
  
+/**
+ * The Class Server.
+ */
 public class Server implements Runnable{
+   
+   /** The Constant PORT. */
    private static final int PORT = 1202;
+   
+   /** The registry. */
    private static Registry registry;
  
+   /**
+    * Start registry.
+    *
+    * @throws RemoteException the remote exception
+    */
    public static void startRegistry() throws RemoteException {
        // Create server registry
        registry =  LocateRegistry.createRegistry(PORT);
    }
  
+   /**
+    * Register object.
+    *
+    * @param name the name
+    * @param remoteObj the remote obj
+    * @throws RemoteException the remote exception
+    * @throws AlreadyBoundException the already bound exception
+    */
    public static void registerObject(String name, Remote remoteObj)
            throws RemoteException, AlreadyBoundException {
  
@@ -29,6 +49,12 @@ public class Server implements Runnable{
                + remoteObj.getClass().getName() + "[" + remoteObj + "]");
    }
  
+   /**
+    * The main method.
+    *
+    * @param args the arguments
+    * @throws Exception the exception
+    */
    public static void main(String[] args) throws Exception {
        new Server().run();
    }

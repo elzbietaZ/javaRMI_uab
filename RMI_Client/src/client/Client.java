@@ -12,32 +12,55 @@ import rmi.MailService;
 import rmi.Message;
  
  
+/**
+ * The Class Client.
+ */
 public class Client  implements Runnable {
  
-    private static final String HOST_IDSERVER = "52.11.90.68";
+    /** The Constant HOST_IDSERVER. */
+    private static final String HOST_IDSERVER = "54.152.4.116";
+    
+    /** The Constant PORT_IDSERVER. */
     private static final int PORT_IDSERVER = 1201;
-    private static final String HOST_MAILSERVER = "52.11.90.68";
+    
+    /** The Constant HOST_MAILSERVER. */
+    private static final String HOST_MAILSERVER = "54.152.4.116";
+    
+    /** The Constant PORT_MAILSERVER. */
     private static final int PORT_MAILSERVER = 1202;
+    
+    /** The registry_idserver. */
     private static Registry registry_idserver;
+    
+    /** The registry_mailserver. */
     private static Registry registry_mailserver;
     
+    /** The user_ name. */
     private static String user_Name = ""; 
+	
+	/** The user_ id. */
 	private static UUID user_Id = null;
  
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     * @throws Exception the exception
+     */
     public static void main(String[] args) throws Exception {
     	new Client().run();
     }
 
 	@Override
 	public void run() {
-		 
+		// initializing the registry for id server
         try {
 			registry_idserver = LocateRegistry.getRegistry(HOST_IDSERVER, PORT_IDSERVER);
 			System.out.println(registry_idserver.toString());
         } catch (RemoteException e) {
 			e.printStackTrace();
 		}
-        
+		// initializing the registry for mail server
 		try {
 			registry_mailserver = LocateRegistry.
 					getRegistry(HOST_MAILSERVER, PORT_MAILSERVER);
@@ -49,13 +72,15 @@ public class Client  implements Runnable {
         IDService service_id = null;
         MailService service_mail = null;
 
+        //bounding idserver to the specified name in this registry
 		try {
 			service_id = (IDService) registry_idserver
 			        .lookup(IDService.class.getSimpleName());
 		} catch (RemoteException | NotBoundException e1) {
 			e1.printStackTrace();
 		}
-        
+		
+        //bounding mailserver to the specified name in this registry
 		try {
 			service_mail = (MailService) registry_mailserver
 			        .lookup(MailService.class.getSimpleName());
@@ -67,6 +92,7 @@ public class Client  implements Runnable {
           
         Scanner input = new Scanner(System.in);
         
+        // showing options to the user
         while (!end) {
         	
         	if (!user_Name.equals("")) {
@@ -79,6 +105,14 @@ public class Client  implements Runnable {
         input.close();		
 	}
 	
+	/**
+	 * Show options for the logged user.
+	 *
+	 * @param input the input
+	 * @param service_id the service_id
+	 * @param service_mail the service_mail
+	 * @return true, if successful
+	 */
 	private boolean show_logged_options(Scanner input, IDService service_id,
 			MailService service_mail) {
         String UsrIn = "";
@@ -106,6 +140,14 @@ public class Client  implements Runnable {
         return end;
 	}
 	
+	/**
+	 * Show options for not logged user.
+	 *
+	 * @param input the input
+	 * @param service the service
+	 * @return true, if successful
+	 */
+	
 	private boolean show_not_logged_options(Scanner input, IDService service) {
 		String UsrIn = "";
         boolean end = false;
@@ -126,6 +168,12 @@ public class Client  implements Runnable {
         return end;
 	}
 	
+	/**
+	 * Registration.
+	 *
+	 * @param input the input
+	 * @param service the service
+	 */
 	private void login_register(Scanner input, IDService service) {
 		UUID generated_id = null;
 		String name = "";
@@ -148,11 +196,21 @@ public class Client  implements Runnable {
 		 }
 	}
 	
+	/**
+	 * Close_session.
+	 */
 	private void close_session() {
 		 user_Name = ""; 
 		 user_Id = null;
 	}
 
+	/**
+	 * Send_message.
+	 *
+	 * @param input the input
+	 * @param service_id the service_id
+	 * @param service_mail the service_mail
+	 */
 	private void send_message(Scanner input, IDService service_id,
 			MailService service_mail) {
 		
@@ -190,6 +248,13 @@ public class Client  implements Runnable {
 		 }
 	}
 	
+	/**
+	 * Show messages.
+	 * Lets to see messages in inbox and outbox.
+	 *
+	 * @param service the service
+	 * @param id the id
+	 */
 	private void show_messages(MailService service, UUID id) {
 		
 		String messages = "";

@@ -8,16 +8,29 @@ import java.util.UUID;
 
 import rmi.IDService;
  
+/**
+ * The Class IDServiceImplementation.
+ */
 public class IDServiceImplementation extends UnicastRemoteObject implements IDService {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The map of the users. */
 	private static Map<String,UUID> users = new HashMap<String,UUID>();
 	
+	/**
+	 * Instantiates a new ID service implementation.
+	 *
+	 * @throws RemoteException the remote exception
+	 */
 	public IDServiceImplementation() throws RemoteException {
 	super();
 	}
 
+	/**
+	 Generates id for the new user or returns existing id of the user for the given name
+	 */
 	public UUID generateID(String name) throws RemoteException {
 		UUID id = null;
 		if (users.containsKey(name)) {
